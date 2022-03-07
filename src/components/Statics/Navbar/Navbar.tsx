@@ -1,147 +1,94 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-
-import {Link} from 'react-router-dom'
-
+import React from "react";
+import { AppBar, Toolbar, Typography, Box } from '@material-ui/core';
+import { Link, useHistory } from 'react-router-dom';
 import './Navbar.css'
+import { useDispatch, useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { addToken } from "../../../store/tokens/action";
+import { toast } from 'react-toastify'; 
 
+function Navbar () {
+    const token = useSelector< TokenState, TokenState ['tokens'] > (
+        ( state ) => state.tokens
+    )
+    let history = useHistory();
+    const dispatch = useDispatch();
 
+    function goLogout() {
+        dispatch(addToken(''));
+        toast.info('Desconectado com sucesso', {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: 'colored',
+            progress: undefined
+        });
+        history.push('/login')
+    }
 
-export default function PrimarySearchAppBar() {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-        React.useState<null | HTMLElement>(null);
+    var navbarComponent;
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
-    };
-
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-        </Menu>
-    );
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size='large'
-                    aria-label='account of current user'
-                    aria-controls='primary-search-account-menu'
-                    aria-haspopup='true'
-                    color='inherit'
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Perfil</p>
-            </MenuItem>
-        </Menu>
-    );
-
-    return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position='static' className='backColor'>
-                <Toolbar>
-                    <IconButton
-                        size='large'
-                        edge='start'
-                        color='inherit'
-                        aria-label='open drawer'
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography
-                        variant='h6'
-                        noWrap
-                        component='div'
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        GustaVerso
-                    </Typography>
-                    <Box mx={1} className='cursor'>
+    if (token !== '') {
+        navbarComponent =
+        <AppBar position='static'>
+                <Toolbar variant='dense'>
+                    <Box className='cursor'>
                         <Typography variant='h6' color='inherit'>
-                            Home
+                            GustaVerso
                         </Typography>
                     </Box>
-                    <Box mx={1} className='cursor'>
-                        <Typography variant='h6' color='inherit'>
-                            Postagens
-                        </Typography>
-                    </Box>
-                    <Box mx={1} className='cursor'>
-                        <Typography variant='h6' color='inherit'>
-                            Temas
-                        </Typography>
-                    </Box>
-                    <Box mx={1} className='cursor'>
-                        <Typography variant='h6' color='inherit'>
-                            Cadastrar Tema
-                        </Typography>
-                    </Box>
-                    <Link to='/login' className='text-decorator-none'>
-                        <Box mx={1} className='cursor'>
+
+                    <Box display='flex' justifyContent='start'>
+                        <Link to='/home' className='text-decorator-none'>
+                            <Box mx={1} className='cursor'>
+                                <Typography variant='h6' color='inherit'>
+                                    Home
+                                </Typography>
+                            </Box>
+                        </Link>
+                        <Link to='/postagem' className='text-decorator-none'>
+                            <Box mx={1} className='cursor'>
+                                <Typography variant='h6' color='inherit'>
+                                    Postagens
+                                </Typography>
+                            </Box>
+                        </Link>
+                        <Link to='/tema' className='text-decorator-none'>
+                            <Box mx={1} className='cursor'>
+                                <Typography variant='h6' color='inherit'>
+                                    Temas
+                                </Typography>
+                            </Box>
+                        </Link>
+                        <Link to='/formularioTema' className='text-decorator-none'>
+                            <Box mx={1} className='cursor'>
+                                <Typography variant='h6' color='inherit'>
+                                    Cadastrar Tema
+                                </Typography>
+                            </Box>
+                        </Link>
+
+                        <Box mx={1} className='cursor' onClick={goLogout}>
                             <Typography variant='h6' color='inherit'>
                                 Sair
                             </Typography>
+
                         </Box>
-                    </Link>
-            </Toolbar>
-        </AppBar>
-            { renderMobileMenu }
-    { renderMenu }
-        </Box >
+
+                    </Box>
+                </Toolbar>
+            </AppBar>
+    }
+
+
+    return (
+        <>
+            { navbarComponent }
+        </>
     );
 }
+
+export default Navbar;
