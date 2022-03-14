@@ -37,7 +37,7 @@ function Navbar () {
                 <Toolbar variant='dense'>
                     <Box className='cursor'>
                         <Typography variant='h6' color='inherit'>
-                            GustaVerso
+                            Lilo Pelo Mundo
                         </Typography>
                     </Box>
 

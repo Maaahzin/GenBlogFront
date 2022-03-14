@@ -4,7 +4,6 @@ import { Grid } from '@material-ui/core'
 import './Home.css';
 import TabPostagem from "../../components/Postagens/TabPostagem/TabPostagem";
 
-//Componentes, nada mais são que funções.
 function Home() {
     return (
         <>

@@ -49,9 +49,9 @@ function CadastroUsuario() {
         e.preventDefault()
         if (confirmarSenha == user.senha && user.senha.length >= 8) {
             cadastroUsuario(`/usuarios/cadastrar`, user, setUserResult)
-            alert('Seja bem vinde a nossa rede! ☺')
+            alert('Seja bem vinde!!!')
         } else {
-            alert('Ops... Você digitou alguma informação incorreta! Tente novamente.')
+            alert('Ops... Você digitou alguma informação incorreta! Tente novamente!')
         }
     }
 
