@@ -4,7 +4,7 @@ import './DeletarTema.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { buscaId, deleteId } from '../../../services/Service';
 import Tema from '../../../models/Tema';
-import { TokenState } from '../../../Store/Store.ts/tokensReducer';
+import { TokenState } from "../../../store/tokens/tokensReducer";
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
