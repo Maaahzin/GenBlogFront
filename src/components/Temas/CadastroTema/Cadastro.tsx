@@ -1,114 +1,115 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { Container, Typography, TextField, Button } from '@material-ui/core';
+import React, {useState, useEffect, ChangeEvent} from 'react'
+import { Container, Typography, TextField, Button } from "@material-ui/core"
+import Tema from '../../../models/Tema';
+import { buscaId, post, put } from '../../../services/Service';
+
 import './CadastroTema.css';
-import { useHistory, useParams } from "react-router-dom";
-import Tema from "../../../models/Tema";
-import { buscaId, post, put } from "../../../services/Service";
-import { useSelector } from "react-redux";
-import { TokenState } from "../../../store/tokens/tokensReducer";
-import { toast } from "react-toastify";
+import { useHistory, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 
 function CadastroTema() {
     let history = useHistory();
-    const { id } = useParams<{id: string}> ();
-    const token = useSelector<TokenState, TokenState['tokens']>(
+    const {id} = useParams<{id: string}>();
+    const token = useSelector<TokenState, TokenState["tokens"]>(
         (state) => state.tokens
-    )
-    const [tema, setTema] = useState<Tema>({
+    );
+
+    const[tema, setTema] = useState<Tema>({
         id: 0,
         descricao: ''
     })
 
-    useEffect(() => {
-        if(token === '') {
-            toast.error('Opa! Para continuar, é preciso estar logado.', {
-                position: 'top-right',
-                autoClose: 3000,
+    useEffect(()=>{
+        if(token === ""){
+            toast.error('Você precisa estar logado!', {
+                position: "top-right",
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+                pauseOnHover: false,
                 draggable: false,
-                theme: 'colored',
-                progress: undefined
-            });            history.push('/login')
+                theme: "colored",
+                progress: undefined,
+            });
+            history.push("/login");
         }
-    }, [token])
+    }, [token]) 
 
-    useEffect(() => {
-        if(id !== undefined)
+    useEffect(() => { 
+        if(id !== undefined){
             findById(id)
-    }, [id])
+        }
+    },[ id ])
 
-    async function findById(id: string) {
-        buscaId(`tema/${id}`, setTema, {
+    async function findById(id: string  ){
+        buscaId(`/temas/${id}`, setTema, {
             headers: {
                 'Authorization': token
             }
         })
     }
 
-    function updateTema(e: ChangeEvent<HTMLInputElement>) {
-        setTema ({
+    function updatedTema(e: ChangeEvent<HTMLInputElement>){
+        setTema({
             ...tema,
             [e.target.name]: e.target.value,
-        })
+        });
     }
 
-    async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
-        e.preventDefault()
-        console.log("tema " + JSON.stringify(tema))
+    async function onSubmit(e: ChangeEvent<HTMLFormElement>){
+        e.preventDefault();
+        console.log("tema" + JSON.stringify(tema));
 
-        if (id !== undefined) {
-            console.log(tema)
-            put(`/tema`, tema, setTema, {
+        if(id !== undefined){
+            console.log(tema);
+            put(`/temas`, tema, setTema, {
                 headers: {
                     'Authorization': token
                 }
             })
-            toast.success('Legal! Tema atualizado :)', {
-                position: 'top-right',
-                autoClose: 3000,
+            toast.success('Tema atualizado com sucesso!', {
+                position: "top-right",
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+                pauseOnHover: false,
                 draggable: false,
-                theme: 'colored',
-                progress: undefined
+                theme: "colored",
+                progress: undefined,
             });
-        } else {
-            post(`/tema`, tema, setTema, {
+        }else{
+            post(`/temas`, tema, setTema, {
                 headers: {
                     'Authorization': token
                 }
             })
-            toast.success('Pronto. Tema cadastrado ^.^', {
-                position: 'top-right',
-                autoClose: 3000,
+            toast.success('Tema cadastrado com sucesso!', {
+                position: "top-right",
+                autoClose: 2000,
                 hideProgressBar: false,
                 closeOnClick: true,
-                pauseOnHover: true,
+                pauseOnHover: false,
                 draggable: false,
-                theme: 'colored',
-                progress: undefined
+                theme: "colored",
+                progress: undefined,
             });
         }
-        back()
-
+        back();
     }
 
-    function back() {
-        history.push('/tema')
+    function back(){
+        history.push('/temas')
     }
-    
+  
     return (
-        <Container maxWidth='sm' className='topo'>
+        <Container maxWidth="sm" className="topo">
             <form onSubmit={onSubmit}>
-                <Typography variant='h3' color ='textSecondary' component='h1' align='center'>
-                    Formulário para cadastro de tema
-                </Typography>
-                <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updateTema(e)} id='descricao' label='descricao' variant='outlined' name='descricao' margin='normal' fullWidth />
-                <Button type='submit' variant='contained' color='primary' className='btF'>
+                <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro tema</Typography>
+                <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id="descricao" label="Tema" variant="outlined" name="descricao" margin="normal" fullWidth placeholder="Minimo de 5 e máximo de 100 caracteres" required/>
+                <Button type="submit" variant="contained" color="primary">
                     Finalizar
                 </Button>
             </form>

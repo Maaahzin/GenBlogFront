@@ -1,17 +1,17 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import Home from './paginas/home/Home';
+import Home from './pages/Home/Home';
 import './App.css';
-import Navbar from './components/estaticos/navbar/Navbar';
-import Footer from './components/estaticos/footer/Footer';
-import Login from './paginas/login/Login';
-import CadastroUsuario from './paginas/cadastroUsuario/CadastroUsuario';
-import ListaTema from './components/temas/listatema/ListaTema';
-import ListaPostagem from './components/postagens/listapostagem/ListaPostagem';
-import CadastroPost from './components/postagens/cadastroPost/CadastroPost'
-import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPostagem'
-import DeletarTema from './components/temas/deletarTema/DeletarTema'
-import CadastroTema from './components/temas/cadastroTema/CadastroTema'
+import Navbar from './components/Statics/Navbar/Navbar';
+import Footer from './components/Statics/Footer/Footer';
+import Login from './pages/Login/Login';
+import CadastroUsuario from './pages/CadastroUsuario/CadastroUsuario';
+import ListaTema from './components/Temas/ListaTema/ListaTema';
+import ListaPostagem from './components/Postagens/ListaPostagem/ListaPostagem';
+import CadastroPost from './components/Postagens/CadastroPostagem/CadastroPostagem';
+import DeletarPostagem from './components/Postagens/DeletarPostagem/DeletarPostagem';
+import CadastroTema from './components/Temas/CadastroTema/Cadastro';
+import DeletarTema from './components/Temas/DeletarTema/DeletarTema';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { ToastContainer } from 'react-toastify';
