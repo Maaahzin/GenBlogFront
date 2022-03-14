@@ -3,8 +3,8 @@ import { AppBar, Toolbar, Typography, Box } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
 import './Navbar.css'
 import { useDispatch, useSelector } from "react-redux";
-import { TokenState } from "../../../store/tokens/tokensReducer";
-import { addToken } from "../../../store/tokens/action";
+import { TokenState } from "../../../Store/Store.ts/tokensReducer";
+import { addToken } from "../../../Store/Store.ts/action";
 import { toast } from 'react-toastify'; 
 
 function Navbar () {

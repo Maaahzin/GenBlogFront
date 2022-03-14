@@ -6,7 +6,7 @@ import { buscaId, post, put } from '../../../services/Service';
 import './CadastroTema.css';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { TokenState } from '../../../Store/Store.ts/tokensReducer';
 import { toast } from 'react-toastify';
 
 
